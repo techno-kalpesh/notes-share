@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Notes Share</title>
+</head>
+<body>
+  <h1>Welcome to Notes Share</h1>
+  <button id="logout">Logout</button>
+
+  <script type="module">
+    // Import Firebase SDK modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+
+    // ✅ Your Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBQhEpMTyFYRIZw149nXuAw47cBMBhbs6I",
+      authDomain: "notes-share-kv.firebaseapp.com",
+      projectId: "notes-share-kv",
+      storageBucket: "notes-share-kv.firebasestorage.app",
+      messagingSenderId: "845944968885",
+      appId: "1:845944968885:web:d027514f1ceb78857b10fc",
+      measurementId: "G-30CCB54HB9"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Check login state
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        console.log("Logged in as:", user.email);
+      } else {
+        console.log("Not logged in");
+        window.location.href = "login.html"; // redirect if not logged in
+      }
+    });
+
+    // Logout button
+    document.getElementById("logout").addEventListener("click", () => {
+      signOut(auth).then(() => {
+        alert("Logged out!");
+        window.location.href = "login.html";
+      });
+    });
+  </script>
+</body>
+</html>
